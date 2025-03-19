@@ -20,5 +20,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Test (placeholder)
-        run: echo "Tests passed!" # Replace with real tests later
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd /home/ubuntu/app
+            rm -rf * # Clear old files
+            git clone https://github.com/naveenreddy007/CICD-gitworkflow.git .
+            npm install
+            pm2 restart app || pm2 start index.js --cifirstapp
