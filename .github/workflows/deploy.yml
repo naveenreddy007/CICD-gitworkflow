@@ -12,10 +12,16 @@ jobs:
             username: ubuntu
             key: ${{ secrets.KEY }}
             port: 22
-            script: |
-              mkdir -p /home/ubuntu/app
-              cd /home/ubuntu/app
-              rm -rf * # Clear old files
-              git clone https://github.com/naveenreddy007/CICD-gitworkflow.git .
-              /home/ubuntu/.nvm/versions/node/v22.14.0/bin/npm install
-              /home/ubuntu/.nvm/versions/node/v22.14.0/bin/pm2 restart app || /home/ubuntu/.nvm/versions/node/v22.14.0/bin/pm2 start index.js --name app
+           script: |
+                export NVM_DIR="$HOME/.nvm"
+                [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+                nvm use 22
+              
+                mkdir -p /home/ubuntu/app
+                cd /home/ubuntu/app
+                rm -rf * # Clear old files
+                git clone https://github.com/naveenreddy007/CICD-gitworkflow.git .
+              
+                npm install
+                pm2 restart app || pm2 start index.js --name app
