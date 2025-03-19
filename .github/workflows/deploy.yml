@@ -11,5 +11,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Say hello
-        run: echo "Hello, this is my first workflow!"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test (placeholder)
+        run: echo "Tests passed!" # Replace with real tests later
