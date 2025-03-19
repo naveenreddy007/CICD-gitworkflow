@@ -8,32 +8,20 @@ jobs:
       - name: multiple command
         uses: appleboy/ssh-action@v1
         with:
-            host: 3.87.155.238
-            username: ubuntu
-            key: ${{ secrets.KEY }}
-            port: 22
-        script: |
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-          nvm use 22
+          host: 3.87.155.238
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            nvm install 22
 
-          mkdir -p /home/ubuntu/app
-          cd /home/ubuntu/app
-          rm -rf * # Clear old files
-
-          # Ensure git clone works correctly
-          if [ ! -d ".git" ]; then
+            rm -rf /home/ubuntu/app
+            mkdir -p /home/ubuntu/app
+            cd /home/ubuntu/app
             git clone https://github.com/naveenreddy007/CICD-gitworkflow.git .
-          else
-            git pull origin main  # If already cloned, update the repo
-          fi
 
-          npm install
-
-          # Start or restart PM2 with --update-env
-          if pm2 list | grep -q "app"; then
-            pm2 restart app --update-env
-          else
-            pm2 start index.js --name app
-          fi
+            npm install
+            pm2 restart app || pm2 start index.js --name app
