@@ -8,10 +8,10 @@ jobs:
       - name: multiple command
         uses: appleboy/ssh-action@v1
         with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
+            host: 3.87.155.238
+            username: ubuntu
             key: ${{ secrets.KEY }}
-            port: ${{ secrets.PORT }}
+            port: 22
             script: |
              whoami
              ls -al
