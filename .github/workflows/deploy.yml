@@ -13,9 +13,9 @@ jobs:
             key: ${{ secrets.KEY }}
             port: 22
             script: |
-             mkdir /home/ubuntu/app
-             cd /home/ubuntu/app
-             rm -rf * # Clear old files
-             git clone https://github.com/naveenreddy007/CICD-gitworkflow.git .
-             npm install
-             pm2 restart app || pm2 start index.js --name app
+              mkdir -p /home/ubuntu/app
+              cd /home/ubuntu/app
+              rm -rf * # Clear old files
+              git clone https://github.com/naveenreddy007/CICD-gitworkflow.git .
+              /home/ubuntu/.nvm/versions/node/v22.14.0/bin/npm install
+              /home/ubuntu/.nvm/versions/node/v22.14.0/bin/pm2 restart app || /home/ubuntu/.nvm/versions/node/v22.14.0/bin/pm2 start index.js --name app
